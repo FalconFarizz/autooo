@@ -1,6 +1,7 @@
 {
   "homepage": "https://falconfarizz.github.io/automated",
   "name": "house-3d",
+  "repository": "https://github.com/FalconFarizz/automated.git",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
