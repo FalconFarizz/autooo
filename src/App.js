@@ -6,7 +6,6 @@ import Controller from './Controller';
 
 // Audio context for sound effects
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-const sounds = {};
 
 function createSound(frequency, duration, type = 'sine') {
   const oscillator = audioContext.createOscillator();
@@ -53,6 +52,7 @@ function App() {
   const [currentView, setCurrentView] = useState('exterior');
   const [currentRoom, setCurrentRoom] = useState('living');
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [fullscreen, setFullscreen] = useState(false);
 
   const toggleLight = () => {
     setLightOn(!lightOn);
@@ -97,37 +97,62 @@ function App() {
     playClickSound();
   };
 
+  const toggleFullscreen = () => {
+    setFullscreen(!fullscreen);
+    playNavigationSound();
+  };
+
   return (
-    <div className="app">
-      <div className="app__panel">
-        <div className="app__panel-content">
-          <h1 className="panel-title">3D House Controller</h1>
-          <Controller
-            lightOn={lightOn}
-            fanOn={fanOn}
-            gateOpen={gateOpen}
-            tvOn={tvOn}
-            currentView={currentView}
-            currentRoom={currentRoom}
-            soundEnabled={soundEnabled}
-            onLight={toggleLight}
-            onFan={toggleFan}
-            onGate={toggleGate}
-            onTV={toggleTV}
-            onReset={resetAll}
-            onSwitchView={switchView}
-            onSwitchRoom={switchRoom}
-            onToggleSound={toggleSound}
-          />
+    <div className={`app ${fullscreen ? 'app--fullscreen' : ''}`}>
+      {!fullscreen && (
+        <div className="app__panel">
+          <div className="app__panel-content">
+            <h1 className="panel-title">3D House Controller</h1>
+            <Controller
+              lightOn={lightOn}
+              fanOn={fanOn}
+              gateOpen={gateOpen}
+              tvOn={tvOn}
+              currentView={currentView}
+              currentRoom={currentRoom}
+              soundEnabled={soundEnabled}
+              onLight={toggleLight}
+              onFan={toggleFan}
+              onGate={toggleGate}
+              onTV={toggleTV}
+              onReset={resetAll}
+              onSwitchView={switchView}
+              onSwitchRoom={switchRoom}
+              onToggleSound={toggleSound}
+            />
+          </div>
         </div>
-      </div>
+      )}
       <div className="app__canvas">
         {currentView === 'exterior' ? (
           <Exterior gateOpen={gateOpen} />
         ) : (
           <InteriorScene lightOn={lightOn} fanOn={fanOn} tvOn={tvOn} currentRoom={currentRoom} />
         )}
+        {fullscreen && (
+          <button
+            className="fullscreen-exit-btn"
+            onClick={toggleFullscreen}
+            title="Exit Fullscreen"
+          >
+            ⛶
+          </button>
+        )}
       </div>
+      {!fullscreen && (
+        <button
+          className="fullscreen-btn"
+          onClick={toggleFullscreen}
+          title="Enter Fullscreen"
+        >
+          ⛶
+        </button>
+      )}
     </div>
   );
 }
