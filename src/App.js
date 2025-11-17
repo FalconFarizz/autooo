@@ -102,39 +102,15 @@ function App() {
     playNavigationSound();
   };
 
-  return (
-    <div className={`app ${fullscreen ? 'app--fullscreen' : ''}`}>
-      {!fullscreen && (
-        <div className="app__panel">
-          <div className="app__panel-content">
-            <h1 className="panel-title">3D House Controller</h1>
-            <Controller
-              lightOn={lightOn}
-              fanOn={fanOn}
-              gateOpen={gateOpen}
-              tvOn={tvOn}
-              currentView={currentView}
-              currentRoom={currentRoom}
-              soundEnabled={soundEnabled}
-              onLight={toggleLight}
-              onFan={toggleFan}
-              onGate={toggleGate}
-              onTV={toggleTV}
-              onReset={resetAll}
-              onSwitchView={switchView}
-              onSwitchRoom={switchRoom}
-              onToggleSound={toggleSound}
-            />
-          </div>
-        </div>
-      )}
-      <div className="app__canvas">
-        {currentView === 'exterior' ? (
-          <Exterior gateOpen={gateOpen} />
-        ) : (
-          <InteriorScene lightOn={lightOn} fanOn={fanOn} tvOn={tvOn} currentRoom={currentRoom} />
-        )}
-        {fullscreen && (
+  if (fullscreen) {
+    return (
+      <div className="container">
+        <div className="model-area">
+          {currentView === 'exterior' ? (
+            <Exterior gateOpen={gateOpen} />
+          ) : (
+            <InteriorScene lightOn={lightOn} fanOn={fanOn} tvOn={tvOn} currentRoom={currentRoom} />
+          )}
           <button
             className="fullscreen-exit-btn"
             onClick={toggleFullscreen}
@@ -142,9 +118,39 @@ function App() {
           >
             ⛶
           </button>
-        )}
+        </div>
       </div>
-      {!fullscreen && (
+    );
+  }
+
+  return (
+    <div className="container">
+      <div className="left-panel">
+        <h1 className="panel-title">3D House Controller</h1>
+        <Controller
+          lightOn={lightOn}
+          fanOn={fanOn}
+          gateOpen={gateOpen}
+          tvOn={tvOn}
+          currentView={currentView}
+          currentRoom={currentRoom}
+          soundEnabled={soundEnabled}
+          onLight={toggleLight}
+          onFan={toggleFan}
+          onGate={toggleGate}
+          onTV={toggleTV}
+          onReset={resetAll}
+          onSwitchView={switchView}
+          onSwitchRoom={switchRoom}
+          onToggleSound={toggleSound}
+        />
+      </div>
+      <div className="model-area">
+        {currentView === 'exterior' ? (
+          <Exterior gateOpen={gateOpen} />
+        ) : (
+          <InteriorScene lightOn={lightOn} fanOn={fanOn} tvOn={tvOn} currentRoom={currentRoom} />
+        )}
         <button
           className="fullscreen-btn"
           onClick={toggleFullscreen}
@@ -152,7 +158,7 @@ function App() {
         >
           ⛶
         </button>
-      )}
+      </div>
     </div>
   );
 }

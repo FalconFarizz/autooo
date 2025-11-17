@@ -116,8 +116,7 @@ const Controller = ({
   ];
 
   return (
-    <div className="controller">
-      <h1 className="controller__title">3D House Controller</h1>
+    <div>
       <div className="controller__status">
         <span>Lights: {lightOn ? 'On' : 'Off'}</span>
         <span>TV: {tvOn ? 'Playing' : 'Off'}</span>
