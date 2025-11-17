@@ -16,7 +16,23 @@ const DeviceCard = ({ icon, label, state, description, onClick }) => {
   );
 };
 
-const Controller = ({ currentView, lightOn, fanOn, gateOpen, tvOn, onLight, onFan, onGate, onTV, onReset, onSwitchView }) => {
+const Controller = ({
+  currentView,
+  currentRoom,
+  soundEnabled,
+  lightOn,
+  fanOn,
+  gateOpen,
+  tvOn,
+  onLight,
+  onFan,
+  onGate,
+  onTV,
+  onReset,
+  onSwitchView,
+  onSwitchRoom,
+  onToggleSound
+}) => {
   const devices = [
     {
       icon: '💡',
@@ -58,10 +74,44 @@ const Controller = ({ currentView, lightOn, fanOn, gateOpen, tvOn, onLight, onFa
     },
     {
       icon: '🏡',
-      label: 'Living Room',
+      label: 'Interior Rooms',
       state: currentView === 'interior',
-      description: currentView === 'interior' ? 'Inside the living room' : 'Tap to go inside',
+      description: currentView === 'interior' ? 'Inside the house' : 'Tap to go inside',
       onClick: () => onSwitchView('interior'),
+    },
+  ];
+
+  const roomOptions = [
+    {
+      icon: '🛋️',
+      label: 'Living Room',
+      state: currentRoom === 'living',
+      description: currentRoom === 'living' ? 'Current room' : 'Modern living space',
+      onClick: () => onSwitchRoom('living'),
+    },
+    {
+      icon: '👨‍🍳',
+      label: 'Kitchen',
+      state: currentRoom === 'kitchen',
+      description: currentRoom === 'kitchen' ? 'Current room' : 'Modern kitchen',
+      onClick: () => onSwitchRoom('kitchen'),
+    },
+    {
+      icon: '🛏️',
+      label: 'Bedroom',
+      state: currentRoom === 'bedroom',
+      description: currentRoom === 'bedroom' ? 'Current room' : 'Cozy bedroom',
+      onClick: () => onSwitchRoom('bedroom'),
+    },
+  ];
+
+  const soundControls = [
+    {
+      icon: '🔊',
+      label: 'Sound Effects',
+      state: soundEnabled,
+      description: soundEnabled ? 'Audio enabled' : 'Audio disabled',
+      onClick: onToggleSound,
     },
   ];
 
@@ -87,6 +137,24 @@ const Controller = ({ currentView, lightOn, fanOn, gateOpen, tvOn, onLight, onFa
         <div className="device-grid">
           {viewOptions.map((option) => (
             <DeviceCard key={option.label} {...option} />
+          ))}
+        </div>
+      </div>
+      {currentView === 'interior' && (
+        <div className="controller__section">
+          <h2 className="controller__section-title">Room Navigation</h2>
+          <div className="device-grid">
+            {roomOptions.map((room) => (
+              <DeviceCard key={room.label} {...room} />
+            ))}
+          </div>
+        </div>
+      )}
+      <div className="controller__section">
+        <h2 className="controller__section-title">Settings</h2>
+        <div className="device-grid">
+          {soundControls.map((control) => (
+            <DeviceCard key={control.label} {...control} />
           ))}
         </div>
       </div>

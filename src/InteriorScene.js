@@ -422,8 +422,165 @@ function CoffeeTable() {
   );
 }
 
+// ------------------ Kitchen specific components ----------------------------------
+function KitchenCounter({ position = [0, 0.9, -2], scale = 1 }) {
+  return (
+    <group position={position} scale={scale}>
+      {/* Countertop */}
+      <mesh position={[0, 0, 0]} castShadow>
+        <boxGeometry args={[3, 0.1, 0.8]} />
+        <meshStandardMaterial color="#f5f5f5" roughness={0.1} />
+      </mesh>
+      {/* Base cabinets */}
+      <mesh position={[0, -0.35, 0]} castShadow>
+        <boxGeometry args={[3, 0.7, 0.6]} />
+        <meshStandardMaterial color="#ffffff" roughness={0.8} />
+      </mesh>
+      {/* Sink */}
+      <mesh position={[-0.5, 0.06, 0]} castShadow>
+        <boxGeometry args={[0.6, 0.08, 0.4]} />
+        <meshStandardMaterial color="#e0e0e0" metalness={0.8} roughness={0.2} />
+      </mesh>
+      {/* Handles */}
+      <mesh position={[-1.2, -0.1, 0.35]} castShadow>
+        <cylinderGeometry args={[0.03, 0.03, 0.3, 8]} />
+        <meshStandardMaterial color="#d4af37" metalness={0.9} />
+      </mesh>
+    </group>
+  );
+}
+
+function KitchenAppliance({ position = [1.2, 1, -2], scale = 1 }) {
+  return (
+    <group position={position} scale={scale}>
+      {/* Refrigerator body */}
+      <mesh position={[0, 0, 0]} castShadow>
+        <boxGeometry args={[0.9, 2, 0.8]} />
+        <meshStandardMaterial color="#f0f0f0" roughness={0.2} />
+      </mesh>
+      {/* Door */}
+      <mesh position={[0.41, 0, 0]} castShadow>
+        <boxGeometry args={[0.08, 2, 0.75]} />
+        <meshStandardMaterial color="#e0e0e0" roughness={0.1} />
+      </mesh>
+      {/* Handle */}
+      <mesh position={[0.48, 0.3, 0.2]} castShadow>
+        <cylinderGeometry args={[0.02, 0.02, 0.4, 8]} />
+        <meshStandardMaterial color="#c0c0c0" metalness={1} />
+      </mesh>
+    </group>
+  );
+}
+
+// ------------------ Bedroom specific components ----------------------------------
+function BedroomBed({ position = [0, 0.4, -2], scale = 1 }) {
+  return (
+    <group position={position} scale={scale}>
+      {/* Mattress */}
+      <mesh position={[0, 0, 0]} castShadow>
+        <boxGeometry args={[2, 0.4, 1.8]} />
+        <meshStandardMaterial color="#f8f8f8" roughness={0.9} />
+      </mesh>
+      {/* Headboard */}
+      <mesh position={[0, 0.8, -0.85]} castShadow>
+        <boxGeometry args={[2, 0.8, 0.1]} />
+        <meshStandardMaterial color="#8b4513" roughness={0.6} />
+      </mesh>
+      {/* Bed frame legs */}
+      {[0, 1, 2, 3].map((i) => (
+        <mesh key={`leg-${i}`} position={[(i % 2) * 1.8 - 0.9, -0.25, (Math.floor(i / 2)) * 1.6 - 0.8]} castShadow>
+          <cylinderGeometry args={[0.05, 0.05, 0.5, 8]} />
+          <meshStandardMaterial color="#654321" roughness={0.7} />
+        </mesh>
+      ))}
+      {/* Pillows */}
+      <mesh position={[-0.6, 0.25, -0.2]} castShadow>
+        <boxGeometry args={[0.6, 0.2, 0.4]} />
+        <meshStandardMaterial color="#ffffff" roughness={0.9} />
+      </mesh>
+      <mesh position={[0.6, 0.25, -0.2]} castShadow>
+        <boxGeometry args={[0.6, 0.2, 0.4]} />
+        <meshStandardMaterial color="#ffffff" roughness={0.9} />
+      </mesh>
+    </group>
+  );
+}
+
+function Wardrobe({ position = [-3, 1, -4], scale = 1 }) {
+  return (
+    <group position={position} scale={scale}>
+      {/* Main body */}
+      <mesh position={[0, 0, 0]} castShadow>
+        <boxGeometry args={[1.2, 2, 0.6]} />
+        <meshStandardMaterial color="#8b4513" roughness={0.6} />
+      </mesh>
+      {/* Doors */}
+      <mesh position={[-0.27, 0, 0.31]} castShadow>
+        <boxGeometry args={[0.5, 2, 0.05]} />
+        <meshStandardMaterial color="#654321" roughness={0.7} />
+      </mesh>
+      <mesh position={[0.27, 0, 0.31]} castShadow>
+        <boxGeometry args={[0.5, 2, 0.05]} />
+        <meshStandardMaterial color="#654321" roughness={0.7} />
+      </mesh>
+      {/* Handles */}
+      <mesh position={[-0.25, 0.3, 0.33]} castShadow>
+        <sphereGeometry args={[0.03, 8, 8]} />
+        <meshStandardMaterial color="#c0c0c0" metalness={0.9} />
+      </mesh>
+      <mesh position={[0.25, 0.3, 0.33]} castShadow>
+        <sphereGeometry args={[0.03, 8, 8]} />
+        <meshStandardMaterial color="#c0c0c0" metalness={0.9} />
+      </mesh>
+    </group>
+  );
+}
+
+function Nightstand({ position = [1.5, 0.45, -1], scale = 1 }) {
+  return (
+    <group position={position} scale={scale}>
+      {/* Tabletop */}
+      <mesh position={[0, 0, 0]} castShadow>
+        <boxGeometry args={[0.6, 0.1, 0.4]} />
+        <meshStandardMaterial color="#654321" roughness={0.5} />
+      </mesh>
+      {/* Drawers */}
+      <mesh position={[0, -0.1, 0]} castShadow>
+        <boxGeometry args={[0.5, 0.2, 0.3]} />
+        <meshStandardMaterial color="#8b4513" roughness={0.7} />
+      </mesh>
+      <mesh position={[0, -0.35, 0]} castShadow>
+        <boxGeometry args={[0.5, 0.2, 0.3]} />
+        <meshStandardMaterial color="#8b4513" roughness={0.7} />
+      </mesh>
+      {/* Legs */}
+      <mesh position={[-0.2, -0.5, -0.1]} castShadow>
+        <cylinderGeometry args={[0.03, 0.03, 0.4, 8]} />
+        <meshStandardMaterial color="#654321" roughness={0.8} />
+      </mesh>
+      <mesh position={[0.2, -0.5, -0.1]} castShadow>
+        <cylinderGeometry args={[0.03, 0.03, 0.4, 8]} />
+        <meshStandardMaterial color="#654321" roughness={0.8} />
+      </mesh>
+      <mesh position={[-0.2, -0.5, 0.1]} castShadow>
+        <cylinderGeometry args={[0.03, 0.03, 0.4, 8]} />
+        <meshStandardMaterial color="#654321" roughness={0.8} />
+      </mesh>
+      <mesh position={[0.2, -0.5, 0.1]} castShadow>
+        <cylinderGeometry args={[0.03, 0.03, 0.4, 8]} />
+        <meshStandardMaterial color="#654321" roughness={0.8} />
+      </mesh>
+      {/* Drawer handle */}
+      <mesh position={[0, -0.1, 0.17]} castShadow>
+        <cylinderGeometry args={[0.02, 0.02, 0.15, 8]} />
+        <meshStandardMaterial color="#c0c0c0" metalness={0.9} />
+      </mesh>
+    </group>
+  );
+}
+
 // ------------------ Main exported scene component ----------------------------------
-export default function InteriorScene({ lightOn = true, fanOn = true, tvOn = true }) {
+export default function InteriorScene({ lightOn = true, fanOn = true, tvOn = true, currentRoom = 'living' }) {
   const [isMobile, setIsMobile] = React.useState(false);
 
   React.useEffect(() => {
@@ -474,15 +631,37 @@ export default function InteriorScene({ lightOn = true, fanOn = true, tvOn = tru
 
           {/* Room and decor */}
           <Room />
-                    <Sofa />
-          <CoffeeTable />
 
-          {/* interactive objects */}
+          {/* Room-specific furniture */}
+          {currentRoom === 'living' && (
+            <>
+              <Sofa />
+              <CoffeeTable />
+              <TV isOn={tvOn} position={[-1.8, 1.15, -2.9]} />
+            </>
+          )}
+
+          {currentRoom === 'kitchen' && (
+            <>
+              <KitchenCounter />
+              <KitchenAppliance />
+            </>
+          )}
+
+          {currentRoom === 'bedroom' && (
+            <>
+              <BedroomBed />
+              <Wardrobe />
+              <Nightstand position={[-1.5, 0.45, -1]} />
+              <Nightstand position={[1.5, 0.45, -1]} />
+            </>
+          )}
+
+          {/* Common lighting and fan */}
           <PhilipsWallLight isOn={lightOn} position={[-5.9, 1.5, 0]} rotation={[0, Math.PI / 2, 0]} />
           <PhilipsWallLight isOn={lightOn} position={[5.9, 1.5, 0]} rotation={[0, -Math.PI / 2, 0]} />
           <PhilipsFloorLamp isOn={lightOn} position={[1.5, 0, -2]} />
           <Fan isOn={fanOn} position={[0, 2.45, -1]} />
-          <TV isOn={tvOn} position={[-1.8, 1.15, -2.9]} />
 
           {/* ground reflections / shadows */}
           <ContactShadows position={[0, 0.01, 0]} opacity={0.6} scale={18} blur={3} far={2.5} />
