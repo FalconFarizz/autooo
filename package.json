@@ -1,5 +1,5 @@
 {
-  "homepage": ".",
+  "homepage": "https://falconfarizz.github.io/autooo/",
   "name": "house-3d",
   "repository": {
     "type": "git",
@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "gh-pages": "^6.3.0",
-    "react-app-rewired": "^2.2.1"
+    "react-app-rewired": "^2.2.1",
+    "vercel": "^48.10.2"
   }
 }
