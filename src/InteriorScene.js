@@ -219,8 +219,33 @@ function TV({ isOn = true, position = [-1.2, 1.1, -2.6], rotation = [0, 0, 0], s
   );
 }
 
-// ------------------ Philips Wall Light ---------------------------------------
+// ------------------ Animated Philips Wall Light with Dynamic Effects ---------------------------------------
 function PhilipsWallLight({ isOn = true, position = [0, 1.5, -5.9], rotation = [0, 0, 0] }) {
+  const lightRef = useRef();
+  const materialRef = useRef();
+
+  // Animate the light color and intensity
+  useFrame((state) => {
+    if (!isOn || !lightRef.current || !materialRef.current) return;
+
+    const time = state.clock.elapsedTime;
+
+    // Dynamic color shifting (warm white with slight blue tint animation)
+    const hue = 0.09 + Math.sin(time * 0.5) * 0.02; // Slight color variation
+    const saturation = 0.1;
+    const lightness = 0.98 + Math.sin(time * 2) * 0.01; // Subtle brightness pulsing
+
+    const color = new THREE.Color().setHSL(hue, saturation, lightness);
+
+    if (lightRef.current) {
+      lightRef.current.color = color;
+    }
+
+    if (materialRef.current) {
+      materialRef.current.emissive = color.clone().multiplyScalar(1.8);
+    }
+  });
+
   return (
     <group position={position} rotation={rotation}>
       {/* wall mount */}
@@ -231,15 +256,23 @@ function PhilipsWallLight({ isOn = true, position = [0, 1.5, -5.9], rotation = [
       {/* light shade */}
       <mesh position={[0, 0, 0.1]} castShadow>
         <cylinderGeometry args={[0.15, 0.15, 0.2, 32]} />
-        <meshStandardMaterial emissive={isOn ? new THREE.Color('#fff7e6') : new THREE.Color('#000000')} emissiveIntensity={isOn ? 2 : 0} metalness={0.1} roughness={0.5} />
+        <meshStandardMaterial
+          ref={materialRef}
+          emissive={isOn ? new THREE.Color('#fff7e6') : new THREE.Color('#000000')}
+          emissiveIntensity={isOn ? 2 : 0}
+          metalness={0.1}
+          roughness={0.5}
+        />
       </mesh>
       {/* point light */}
       <pointLight
+        ref={lightRef}
         position={[0, 0, 0.2]}
         intensity={isOn ? 1.5 : 0}
         distance={5}
         decay={2}
         castShadow
+        color="#fff7e6"
       />
     </group>
   );

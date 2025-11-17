@@ -14,17 +14,58 @@
 
 .app__panel-content {
   padding: 20px;
+  transition: padding 0.3s ease;
 }
 
-.panel-title {
-  font-size: 24px;
-  margin-bottom: 20px;
-  text-align: center;
+/* Smooth transitions for all interactive elements */
+.device-card {
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
+.device-card:hover {
+  transform: translateY(-2px);
+}
+
+.device-card__toggle {
+  transition: all 0.3s ease;
+}
+
+/* Room transition animations */
 .app__canvas {
-  flex: 1;
-  background-color: #000;
+  transition: all 0.5s ease;
+}
+
+/* Loading animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.device-card {
+  animation: fadeIn 0.3s ease;
+}
+
+/* Enhanced mobile styles with better touch targets */
+@media (max-width: 576px) {
+  .device-card {
+    min-height: 60px;
+    padding: 12px;
+  }
+
+  .device-card__icon {
+    font-size: 20px;
+    margin-right: 12px;
+  }
+
+  .device-card__label {
+    font-size: 14px;
+  }
 }
 
 /* Media queries for responsive design */
