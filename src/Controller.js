@@ -1,43 +1,100 @@
 import React from 'react';
 import './Controller.css';
 
-const Controller = ({ onFan, onGate, onTV, onLight, fanOn, gateOpen, tvOn, lightOn }) => {
-    return (
-        <div className="iphone-controller">
-            {/* iPhone notch */}
-            <div className="iphone-notch"></div>
+const DeviceCard = ({ icon, label, state, description, onClick }) => {
+  return (
+    <button type="button" className={`device-card ${state ? 'device-card--active' : ''}`} onClick={onClick}>
+      <span className="device-card__icon">{icon}</span>
+      <div className="device-card__info">
+        <span className="device-card__label">{label}</span>
+        <span className="device-card__description">{description}</span>
+      </div>
+      <span className={`device-card__toggle ${state ? 'device-card__toggle--on' : ''}`}>
+        <span className="device-card__toggle-handle" />
+      </span>
+    </button>
+  );
+};
 
-            {/* Screen */}
-            <div className="controller-screen">
-                <h2 className="controller-title">🏠 Smart Home</h2>
+const Controller = ({ currentView, lightOn, fanOn, gateOpen, tvOn, onLight, onFan, onGate, onTV, onReset, onSwitchView }) => {
+  const devices = [
+    {
+      icon: '💡',
+      label: 'Main Lights',
+      state: lightOn,
+      description: lightOn ? 'Illuminating' : 'Tap to brighten',
+      onClick: onLight,
+    },
+    {
+      icon: '📺',
+      label: 'Entertainment',
+      state: tvOn,
+      description: tvOn ? 'Playing' : 'Screen off',
+      onClick: onTV,
+    },
+    {
+      icon: '🚪',
+      label: 'Entrance Gate',
+      state: gateOpen,
+      description: gateOpen ? 'Gate open' : 'Gate closed',
+      onClick: onGate,
+    },
+    {
+      icon: '💨',
+      label: 'Ceiling Fan',
+      state: fanOn,
+      description: fanOn ? 'Cooling' : 'Tap for breeze',
+      onClick: onFan,
+    },
+  ];
 
-                <div className="controller-buttons">
-                    <button onClick={onFan} className={`controller-btn ${fanOn ? 'active' : ''}`}>
-                        <span>🌀 Fan</span>
-                        <small>{fanOn ? 'ON' : 'OFF'}</small>
-                    </button>
+  const viewOptions = [
+    {
+      icon: '🏠',
+      label: 'Exterior View',
+      state: currentView === 'exterior',
+      description: currentView === 'exterior' ? 'Outside the house' : 'Tap to go outside',
+      onClick: () => onSwitchView('exterior'),
+    },
+    {
+      icon: '🏡',
+      label: 'Living Room',
+      state: currentView === 'interior',
+      description: currentView === 'interior' ? 'Inside the living room' : 'Tap to go inside',
+      onClick: () => onSwitchView('interior'),
+    },
+  ];
 
-                    <button onClick={onGate} className={`controller-btn ${gateOpen ? 'active' : ''}`}>
-                        <span>🚪 Gate</span>
-                        <small>{gateOpen ? 'OPEN' : 'CLOSED'}</small>
-                    </button>
-
-                    <button onClick={onTV} className={`controller-btn ${tvOn ? 'active' : ''}`}>
-                        <span>📺 TV</span>
-                        <small>{tvOn ? 'ON' : 'OFF'}</small>
-                    </button>
-
-                    <button onClick={onLight} className={`controller-btn ${lightOn ? 'active' : ''}`}>
-                        <span>💡 Light</span>
-                        <small>{lightOn ? 'ON' : 'OFF'}</small>
-                    </button>
-                </div>
-            </div>
-
-            {/* iPhone bottom bar */}
-            <div className="iphone-bottom-bar"></div>
+  return (
+    <div className="controller">
+      <h1 className="controller__title">3D House Controller</h1>
+      <div className="controller__status">
+        <span>Lights: {lightOn ? 'On' : 'Off'}</span>
+        <span>TV: {tvOn ? 'Playing' : 'Off'}</span>
+        <span>Gate: {gateOpen ? 'Open' : 'Closed'}</span>
+        <span>Fan: {fanOn ? 'On' : 'Off'}</span>
+      </div>
+      <div className="controller__section">
+        <h2 className="controller__section-title">Quick Controls</h2>
+        <div className="device-grid">
+          {devices.map((device) => (
+            <DeviceCard key={device.label} {...device} />
+          ))}
         </div>
-    );
+      </div>
+      <div className="controller__section">
+        <h2 className="controller__section-title">View Options</h2>
+        <div className="device-grid">
+          {viewOptions.map((option) => (
+            <DeviceCard key={option.label} {...option} />
+          ))}
+        </div>
+      </div>
+      <button type="button" className="controller__reset" onClick={onReset}>
+        Reset All
+      </button>
+    </div>
+  );
 };
 
 export default Controller;

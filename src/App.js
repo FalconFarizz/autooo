@@ -1,39 +1,57 @@
 import React, { useState } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import House from './House';
-import Controller from './Controller';
 import './App.css';
+import InteriorScene from './InteriorScene';
+import Exterior from './Exterior';
+import Controller from './Controller';
 
 function App() {
+  const [lightOn, setLightOn] = useState(false);
   const [fanOn, setFanOn] = useState(false);
   const [gateOpen, setGateOpen] = useState(false);
   const [tvOn, setTvOn] = useState(false);
-  const [lightOn, setLightOn] = useState(false);
+  const [currentView, setCurrentView] = useState('exterior');
 
-  const toggleFan = () => setFanOn((prev) => !prev);
-  const toggleGate = () => setGateOpen((prev) => !prev);
-  const toggleTv = () => setTvOn((prev) => !prev);
-  const toggleLight = () => setLightOn((prev) => !prev);
+  const toggleLight = () => setLightOn(!lightOn);
+  const toggleFan = () => setFanOn(!fanOn);
+  const toggleGate = () => setGateOpen(!gateOpen);
+  const toggleTV = () => setTvOn(!tvOn);
+
+  const resetAll = () => {
+    setLightOn(false);
+    setFanOn(false);
+    setGateOpen(false);
+    setTvOn(false);
+  };
+
+  const switchView = (view) => setCurrentView(view);
 
   return (
-    <div className="App" style={{ height: '100vh', width: '100vw' }}>
-      <Canvas camera={{ position: [5, 5, 5], fov: 75 }}>
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} />
-        <House fanOn={fanOn} gateOpen={gateOpen} tvOn={tvOn} lightOn={lightOn} />
-        <OrbitControls />
-      </Canvas>
-      <Controller
-        onFan={toggleFan}
-        onGate={toggleGate}
-        onTV={toggleTv}
-        onLight={toggleLight}
-        fanOn={fanOn}
-        gateOpen={gateOpen}
-        tvOn={tvOn}
-        lightOn={lightOn}
-      />
+    <div className="app">
+      <div className="app__panel">
+        <div className="app__panel-content">
+          <h1 className="panel-title">3D House Controller</h1>
+          <Controller
+            lightOn={lightOn}
+            fanOn={fanOn}
+            gateOpen={gateOpen}
+            tvOn={tvOn}
+            currentView={currentView}
+            onLight={toggleLight}
+            onFan={toggleFan}
+            onGate={toggleGate}
+            onTV={toggleTV}
+            onReset={resetAll}
+            onSwitchView={switchView}
+          />
+        </div>
+      </div>
+      <div className="app__canvas">
+        {currentView === 'exterior' ? (
+          <Exterior gateOpen={gateOpen} />
+        ) : (
+          <InteriorScene lightOn={lightOn} fanOn={fanOn} tvOn={tvOn} />
+        )}
+      </div>
     </div>
   );
 }
