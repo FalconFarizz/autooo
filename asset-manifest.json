@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/autooo/static/css/main.f80bad25.css",
-    "main.js": "/autooo/static/js/main.b0bb9a87.js",
+    "main.css": "/autooo/static/css/main.40554df6.css",
+    "main.js": "/autooo/static/js/main.7d322951.js",
     "static/js/488.76722806.chunk.js": "/autooo/static/js/488.76722806.chunk.js",
     "index.html": "/autooo/index.html",
-    "main.f80bad25.css.map": "/autooo/static/css/main.f80bad25.css.map",
-    "main.b0bb9a87.js.map": "/autooo/static/js/main.b0bb9a87.js.map",
+    "main.40554df6.css.map": "/autooo/static/css/main.40554df6.css.map",
+    "main.7d322951.js.map": "/autooo/static/js/main.7d322951.js.map",
     "488.76722806.chunk.js.map": "/autooo/static/js/488.76722806.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f80bad25.css",
-    "static/js/main.b0bb9a87.js"
+    "static/css/main.40554df6.css",
+    "static/js/main.7d322951.js"
   ]
 }
